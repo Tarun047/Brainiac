@@ -21,11 +21,13 @@ from rest_framework import routers, serializers, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from analyzercore.models import ChatBlob
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 analyser = SentimentIntensityAnalyzer()
 
 def sentiment_analyzer_scores(sentence):
     score = analyser.polarity_scores(sentence)
-    return "{:-<40} {}".format(sentence, str(score))
+    return score
     
 class ChatBlobSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -53,3 +55,5 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+urlpatterns += staticfiles_urlpatterns()

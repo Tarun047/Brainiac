@@ -31,3 +31,11 @@ spec:
             port:
               number: 8000
             host: usermanagement-service
+    - match:
+        - uri:
+            prefix: /api/chat
+      route:
+        - destination:
+            port:
+              number: 8084
+            host: analyzercore-service
