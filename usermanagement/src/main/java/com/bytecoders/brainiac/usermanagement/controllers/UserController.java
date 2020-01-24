@@ -15,18 +15,21 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @CrossOrigin
     @PostMapping(value = "/add")
     public @ResponseBody Mono<User> createUser(@Valid @RequestBody User user)
     {
         return userService.addUser(user);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/find/{uid}")
     public @ResponseBody  Mono<User> getUser(@PathVariable(value = "uid")String uid)
     {
         return userService.getUser(uid);
     }
 
+     @CrossOrigin
     @DeleteMapping(value = "/delete/{uid}")
     public @ResponseBody boolean deleteUser(@PathVariable(value = "uid")String uid)
     {
@@ -37,12 +40,14 @@ public class UserController {
         return false;
     }
 
+    @CrossOrigin
     @PutMapping(value = "/update")
     public @ResponseBody Mono<User> updateUser(@Valid @RequestBody User user)
     {
         return userService.addUser(user);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/list")
     public @ResponseBody Flux<User> getAllUsers()
     {

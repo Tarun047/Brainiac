@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: usermanagement-app
-          image: gcr.io/brainiac-265813/usermanagement
+          image: gcr.io/brainiac-265813/usermanagement:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: MONGODB_HOST
