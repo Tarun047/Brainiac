@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: usermanagement-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        name: http
+        number: 80
+        protocol: HTTP
+      hosts:
+        - '*'
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: usermanagement-service
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - usermanagement-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api/users
+      route:
+        - destination:
+            port:
+              number: 8000
+            host: usermanagement-service
+    - match:
+        - uri:
+            prefix: /api/chat
+      route:
+        - destination:
+            port:
+              number: 8084
+            host: analyzercore-service

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: analyzercore-service
+  labels:
+    app: analyzercore-service
+spec:
+  ports:
+    - name: http
+      port: 8084
+  selector:
+    app: analyzercore-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analyzercore-service
+  labels: 
+    app: analyzercore-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels: # backend application pod labels should match these
+      app: analyzercore-service
+  template:
+    metadata:
+      labels:
+        app: analyzercore-service
+        version: v1
+    spec:
+      containers:
+        - name: analyzercore-app
+          image: sentimentanalyzer
+          imagePullPolicy: Never
+          env:
+            - name: MONGODB_HOST
+              value: mongodb
+          ports:
+            - containerPort: 8084
